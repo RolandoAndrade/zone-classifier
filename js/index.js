@@ -3,8 +3,6 @@ let ctx = canvas.getContext('2d');
 
 function drawData(data)
 {
-    //new Rectangle(0,0,500,500,"#dfedff").draw();
-
     for(let i=0;i<data.inputs.length;i++)
     {
         if(data.outputs[i])
@@ -14,16 +12,21 @@ function drawData(data)
     }
     new Line().axis(250);
 }
+
 let dataGenerator=new DataGenerator();
 let data;
+
 function generate()
 {
     data=dataGenerator.generate(100);
     drawData(data);
 }
+
 generate();
+
 let error = document.getElementById('error');
 let nn=new NeuronalNetwork([4,2,1],0.5);
+
 function learn()
 {
 
@@ -32,7 +35,9 @@ function learn()
         loss+=Math.abs(nn.learn([[data.inputs[j][0]],[data.inputs[j][1]]],data.outputs[j]));
     error.innerHTML=""+loss/100;
 }
+
 let rect = canvas.getBoundingClientRect();
+
 canvas.onmousedown = function (event)
 {
     let x=(event.clientX - rect.left);
@@ -46,7 +51,7 @@ canvas.onmousedown = function (event)
         new Circle(x,y,1.5,"#616aff").draw();
     else
         new Circle(x,y,1.5,"#ff566f").draw();
-}
+};
 
 window.setInterval(learn,300);
 
